@@ -4,17 +4,17 @@ import { siteMetadata } from "@/content/mock";
 export function Footer() {
   return (
     <footer className="border-t border-slate-800 bg-slate-900 text-slate-300">
-      <Container className="flex flex-col gap-8 py-8 text-sm sm:flex-row sm:items-center sm:justify-between">
+      <Container className="flex flex-col gap-10 py-12 text-base sm:flex-row sm:items-center sm:justify-between">
         {/* Left: logo placeholder, name, socials */}
         <div className="flex items-start gap-4">
           <div
-            className="flex h-10 w-10 items-center justify-center rounded-full border border-sky-400/70 bg-slate-900 text-xs font-semibold text-sky-400"
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-sky-400/70 bg-slate-900 text-sm font-semibold text-sky-400"
             aria-hidden="true"
           >
             LOGO
           </div>
-          <div className="space-y-2">
-            <p className="text-sm font-semibold text-slate-100">ISPE UCSD</p>
+          <div className="space-y-3">
+            <p className="text-base font-semibold text-slate-100">ISPE UCSD</p>
             <div className="flex items-center gap-3">
               {siteMetadata.socials.website ? (
                 <a
@@ -54,11 +54,11 @@ export function Footer() {
         </div>
 
         {/* Right: contact block */}
-        <div className="space-y-1 text-sm sm:text-right">
-          <p className="text-xs font-semibold uppercase tracking-wide text-sky-400">
+        <div className="space-y-2 text-base sm:text-right">
+          <p className="text-sm font-semibold uppercase tracking-wide text-sky-400">
             Contact Us
           </p>
-          <p className="text-xs text-slate-400">
+          <p className="text-sm text-slate-300">
             For all inquiries, please contact us at{" "}
             <a
               href={`mailto:${siteMetadata.email}`}
