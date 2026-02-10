@@ -107,7 +107,7 @@ export const navItems: NavItem[] = [
   { label: "Resources", href: "/resources" },
   { label: "Membership", href: "/membership" },
   { label: "Contact", href: "/contact" },
-  { label: "Meet the Board", href: "/board" },
+  { label: "Meet the Board", href: "/about/board" },
 ];
 
 export const hero: HeroContent = {
@@ -276,7 +276,7 @@ export const nav: NavLink[] = [
   {
     label: "About",
     href: "/about",
-    children: [{ label: "Meet the Board", href: "/board" }],
+    children: [{ label: "Meet the Board", href: "/about/board" }],
   },
   { label: "Programs", href: "/programs" },
   { label: "Events", href: "/events" },

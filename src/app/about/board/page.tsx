@@ -20,7 +20,8 @@ function getInitials(name: string) {
   if (parts.length === 0) return "";
   if (parts.length === 1) return parts[0]!.charAt(0).toUpperCase();
   return (
-    parts[0]!.charAt(0).toUpperCase() + parts[parts.length - 1]!.charAt(0).toUpperCase()
+    parts[0]!.charAt(0).toUpperCase() +
+    parts[parts.length - 1]!.charAt(0).toUpperCase()
   );
 }
 

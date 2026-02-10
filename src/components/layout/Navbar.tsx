@@ -69,8 +69,8 @@ export function Navbar() {
 
             return (
               <div key={item.label} className="relative">
-                <button
-                  type="button"
+                <Link
+                  href={item.href ?? "#"}
                   className={`flex items-center gap-1 border-b-2 border-transparent pb-1 text-sm transition-colors ${
                     isActive || isOpen
                       ? "border-sky-600 text-slate-900"
@@ -85,7 +85,7 @@ export function Navbar() {
                   <span aria-hidden="true" className="text-xs">
                     ▾
                   </span>
-                </button>
+                </Link>
 
                 {isOpen ? (
                   <div
