@@ -3,6 +3,15 @@ export type NavItem = {
   href: string;
 };
 
+export type NavLink = {
+  label: string;
+  href?: string;
+  children?: {
+    label: string;
+    href: string;
+  }[];
+};
+
 export type SiteMetadata = {
   name: string;
   tagline: string;
@@ -65,6 +74,20 @@ export type BoardTeaser = {
   ctaHref: string;
 };
 
+export type BoardTerm = {
+  slug: string;
+  label: string;
+  isCurrent?: boolean;
+};
+
+export type BoardMember = {
+  name: string;
+  role: string;
+  major?: string;
+  imageUrl?: string;
+  linkedin?: string;
+};
+
 export const siteMetadata: SiteMetadata = {
   name: "ISPE UCSD Student Chapter",
   tagline: "Connecting students to the world of pharmaceutical engineering.",
@@ -84,6 +107,7 @@ export const navItems: NavItem[] = [
   { label: "Resources", href: "/resources" },
   { label: "Membership", href: "/membership" },
   { label: "Contact", href: "/contact" },
+  { label: "Meet the Board", href: "/board" },
 ];
 
 export const hero: HeroContent = {
@@ -245,5 +269,69 @@ export const boardTeaser: BoardTeaser = {
     "Our student leadership team coordinates events, programs, and partnerships with industry. We will feature board profiles and history here once our CMS is in place.",
   ctaLabel: "Board details coming soon",
   ctaHref: "/about",
+};
+
+export const nav: NavLink[] = [
+  { label: "Home", href: "/" },
+  {
+    label: "About",
+    href: "/about",
+    children: [{ label: "Meet the Board", href: "/board" }],
+  },
+  { label: "Programs", href: "/programs" },
+  { label: "Events", href: "/events" },
+  { label: "Resources", href: "/resources" },
+  { label: "Membership", href: "/membership" },
+  { label: "Contact", href: "/contact" },
+];
+
+export const boardTerms: BoardTerm[] = [
+  {
+    slug: "2024-2025",
+    label: "2024–2025",
+    isCurrent: true,
+  },
+  {
+    slug: "2023-2024",
+    label: "2023–2024",
+  },
+];
+
+export const boardMembersByTerm: Record<string, BoardMember[]> = {
+  "2024-2025": [
+    {
+      name: "Alex Chen",
+      role: "President",
+      major: "Chemical Engineering",
+      linkedin: "https://linkedin.com/in/example",
+    },
+    {
+      name: "Maria Lopez",
+      role: "Vice President",
+      major: "Bioengineering",
+    },
+    {
+      name: "Jordan Patel",
+      role: "Industry Relations Chair",
+      major: "Chemical Engineering",
+    },
+    {
+      name: "Sarah Kim",
+      role: "Events Chair",
+      major: "Pharmacological Chemistry",
+    },
+  ],
+  "2023-2024": [
+    {
+      name: "Taylor Nguyen",
+      role: "President",
+      major: "Chemical Engineering",
+    },
+    {
+      name: "Priya Singh",
+      role: "Vice President",
+      major: "Bioengineering",
+    },
+  ],
 };
 
