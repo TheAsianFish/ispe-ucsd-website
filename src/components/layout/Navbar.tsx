@@ -68,7 +68,12 @@ export function Navbar() {
             }
 
             return (
-              <div key={item.label} className="relative">
+              <div
+                key={item.label}
+                className="relative"
+                onMouseEnter={() => handleMenuEnter(item.label)}
+                onMouseLeave={handleMenuLeave}
+              >
                 <Link
                   href={item.href ?? "#"}
                   className={`flex items-center gap-1 border-b-2 border-transparent pb-1 text-sm transition-colors ${
@@ -79,45 +84,38 @@ export function Navbar() {
                   aria-haspopup="true"
                   aria-expanded={isOpen}
                   onFocus={() => handleMenuEnter(item.label)}
-                  onMouseEnter={() => handleMenuEnter(item.label)}
                 >
                   {item.label}
-                  <span aria-hidden="true" className="text-xs">
-                    ▾
-                  </span>
                 </Link>
 
-                {isOpen ? (
-                  <div
-                    className="absolute left-0 top-full mt-2 w-56 rounded-xl border border-slate-200 bg-white p-3 shadow-lg"
-                    onMouseEnter={() => handleMenuEnter(item.label)}
-                    onMouseLeave={handleMenuLeave}
-                  >
-                    <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
-                      About
-                    </p>
-                    <ul className="space-y-1 text-sm">
-                      {item.children?.map((child) => {
-                        const childActive = pathname.startsWith(child.href);
+                <div
+                  data-open={isOpen}
+                  className="pointer-events-none absolute left-0 top-full mt-2 w-56 rounded-xl border border-slate-200 bg-white p-3 text-sm opacity-0 shadow-lg transition-all duration-150 ease-out data-[open=true]:pointer-events-auto data-[open=true]:opacity-100 data-[open=true]:translate-y-0 translate-y-1"
+                >
+                  <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    About
+                  </p>
+                  <ul className="space-y-1">
+                    {item.children?.map((child) => {
+                      const childActive = pathname.startsWith(child.href);
 
-                        return (
-                          <li key={child.href}>
-                            <Link
-                              href={child.href}
-                              className={`flex rounded-md px-2 py-1.5 transition-colors ${
-                                childActive
-                                  ? "bg-sky-50 text-sky-800"
-                                  : "text-slate-700 hover:bg-slate-50"
-                              }`}
-                            >
-                              {child.label}
-                            </Link>
-                          </li>
-                        );
-                      })}
-                    </ul>
-                  </div>
-                ) : null}
+                      return (
+                        <li key={child.href}>
+                          <Link
+                            href={child.href}
+                            className={`flex rounded-md px-2 py-1.5 transition-colors ${
+                              childActive
+                                ? "bg-sky-50 text-sky-800"
+                                : "text-slate-700 hover:bg-slate-50"
+                            }`}
+                          >
+                            {child.label}
+                          </Link>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
               </div>
             );
           })}
