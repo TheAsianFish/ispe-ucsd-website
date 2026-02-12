@@ -58,7 +58,7 @@ export function Navbar() {
                   href={item.href ?? "#"}
                   className={`border-b-2 border-transparent pb-1 transition-colors ${
                     isActive
-                      ? "border-sky-600 text-slate-900"
+                      ? "border-sky-600 text-slate-900 font-semibold"
                       : "hover:border-slate-300 hover:text-slate-900"
                   }`}
                 >
@@ -78,7 +78,7 @@ export function Navbar() {
                   href={item.href ?? "#"}
                   className={`flex items-center gap-1 border-b-2 border-transparent pb-1 text-sm transition-colors ${
                     isActive || isOpen
-                      ? "border-sky-600 text-slate-900"
+                      ? "border-sky-600 text-slate-900 font-semibold"
                       : "hover:border-slate-300 hover:text-slate-900"
                   }`}
                   aria-haspopup="true"
@@ -141,6 +141,10 @@ export function Navbar() {
           <Container className="space-y-2 py-3 text-sm">
             {nav.map((item) => {
               const hasChildren = item.children && item.children.length > 0;
+              const isActiveMobile =
+                item.href === "/"
+                  ? pathname === "/"
+                  : item.href && pathname.startsWith(item.href);
               const isSectionOpen = openMobileMenu === item.label;
 
               if (!hasChildren || !item.href) {
@@ -148,7 +152,11 @@ export function Navbar() {
                   <Link
                     key={item.label}
                     href={item.href ?? "#"}
-                    className="block rounded-md px-2 py-2 text-slate-700 hover:bg-slate-100"
+                    className={`block rounded-md px-2 py-2 hover:bg-slate-100 ${
+                      isActiveMobile
+                        ? "font-semibold text-slate-900"
+                        : "text-slate-700"
+                    }`}
                     onClick={() => setMobileOpen(false)}
                   >
                     {item.label}
