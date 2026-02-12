@@ -83,8 +83,9 @@ export type BoardTerm = {
 export type BoardMember = {
   name: string;
   role: string;
-  major?: string;
-  imageUrl?: string;
+  major: string;
+  classYear: string;
+  photo?: string;
   linkedin?: string;
 };
 
@@ -303,22 +304,26 @@ export const boardMembersByTerm: Record<string, BoardMember[]> = {
       name: "Alex Chen",
       role: "President",
       major: "Chemical Engineering",
+      classYear: "Class of 2026",
       linkedin: "https://linkedin.com/in/example",
     },
     {
       name: "Maria Lopez",
       role: "Vice President",
       major: "Bioengineering",
+      classYear: "Class of 2026",
     },
     {
       name: "Jordan Patel",
       role: "Industry Relations Chair",
       major: "Chemical Engineering",
+      classYear: "Class of 2026",
     },
     {
       name: "Sarah Kim",
       role: "Events Chair",
       major: "Pharmacological Chemistry",
+      classYear: "Class of 2027",
     },
   ],
   "2023-2024": [
@@ -326,11 +331,13 @@ export const boardMembersByTerm: Record<string, BoardMember[]> = {
       name: "Taylor Nguyen",
       role: "President",
       major: "Chemical Engineering",
+      classYear: "Class of 2025",
     },
     {
       name: "Priya Singh",
       role: "Vice President",
       major: "Bioengineering",
+      classYear: "Class of 2025",
     },
   ],
 };

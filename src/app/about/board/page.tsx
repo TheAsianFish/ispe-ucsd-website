@@ -10,19 +10,10 @@ import {
   type BoardMember,
   type BoardTerm,
 } from "@/content/mock";
+import { BoardMemberTile } from "@/components/cards/BoardMemberTile";
 
 function getInitialTerm(terms: BoardTerm[]): BoardTerm | undefined {
   return terms.find((t) => t.isCurrent) ?? terms[0];
-}
-
-function getInitials(name: string) {
-  const parts = name.split(" ").filter(Boolean);
-  if (parts.length === 0) return "";
-  if (parts.length === 1) return parts[0]!.charAt(0).toUpperCase();
-  return (
-    parts[0]!.charAt(0).toUpperCase() +
-    parts[parts.length - 1]!.charAt(0).toUpperCase()
-  );
 }
 
 export default function BoardPage() {
@@ -125,48 +116,12 @@ export default function BoardPage() {
               There are no board members listed for this term yet.
             </p>
           ) : (
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="grid gap-8 sm:grid-cols-2">
               {members.map((member) => (
-                <article
+                <BoardMemberTile
                   key={member.name + member.role}
-                  className="flex gap-3 rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
-                >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-sky-100 text-sm font-semibold text-sky-800">
-                    {member.imageUrl ? (
-                      // eslint-disable-next-line @next/next/no-img-element
-                      <img
-                        src={member.imageUrl}
-                        alt={member.name}
-                        className="h-12 w-12 rounded-full object-cover"
-                      />
-                    ) : (
-                      <span aria-hidden="true">{getInitials(member.name)}</span>
-                    )}
-                  </div>
-                  <div className="space-y-1 text-sm">
-                    <h2 className="font-semibold text-slate-900">
-                      {member.name}
-                    </h2>
-                    <p className="text-xs font-medium uppercase tracking-wide text-sky-700">
-                      {member.role}
-                    </p>
-                    {member.major ? (
-                      <p className="text-xs text-slate-500">{member.major}</p>
-                    ) : null}
-                    {member.linkedin ? (
-                      <p className="pt-1 text-xs">
-                        <a
-                          href={member.linkedin}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="font-medium text-sky-700 underline-offset-2 hover:underline"
-                        >
-                          View LinkedIn
-                        </a>
-                      </p>
-                    ) : null}
-                  </div>
-                </article>
+                  member={member}
+                />
               ))}
             </div>
           )}
