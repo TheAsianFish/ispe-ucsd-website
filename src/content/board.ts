@@ -29,7 +29,7 @@ export type BoardTerm = {
 
 export async function getCurrentBoard(): Promise<BoardTerm | null> {
   const query = `
-    *[_type == "boardTerm" && current == true][0]{
+    *[_type == "boardTerm" && isCurrent == true][0]{
       title,
       slug,
       "seats": *[_type == "boardSeat" && references(^._id)]
@@ -40,7 +40,7 @@ export async function getCurrentBoard(): Promise<BoardTerm | null> {
             name,
             major,
             classYear,
-            image,
+            "image": headshot,
             linkedin
           }
         }
