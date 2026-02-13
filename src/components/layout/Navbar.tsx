@@ -56,10 +56,10 @@ export function Navbar() {
                 <Link
                   key={item.label}
                   href={item.href ?? "#"}
-                  className={`border-b-2 border-transparent pb-1 transition-colors ${
+                  className={`pb-1 transition-colors ${
                     isActive
-                      ? "border-sky-600 text-slate-900 font-semibold"
-                      : "hover:border-slate-300 hover:text-slate-900"
+                      ? "text-slate-900 font-semibold underline decoration-2 decoration-sky-600 underline-offset-4"
+                      : "border-b-2 border-transparent hover:border-slate-300 hover:text-slate-900"
                   }`}
                 >
                   {item.label}
@@ -76,10 +76,10 @@ export function Navbar() {
               >
                 <Link
                   href={item.href ?? "#"}
-                  className={`flex items-center gap-1 border-b-2 border-transparent pb-1 text-sm transition-colors ${
+                  className={`flex items-center gap-1 pb-1 text-sm transition-colors ${
                     isActive || isOpen
-                      ? "border-sky-600 text-slate-900 font-semibold"
-                      : "hover:border-slate-300 hover:text-slate-900"
+                      ? "text-slate-900 font-semibold underline decoration-2 decoration-sky-600 underline-offset-4"
+                      : "border-b-2 border-transparent hover:border-slate-300 hover:text-slate-900"
                   }`}
                   aria-haspopup="true"
                   aria-expanded={isOpen}
