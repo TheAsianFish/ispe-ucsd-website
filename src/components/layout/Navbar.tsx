@@ -77,9 +77,11 @@ export function Navbar() {
                 <Link
                   href={item.href ?? "#"}
                   className={`flex items-center gap-1 pb-1 text-sm transition-colors ${
-                    isActive || isOpen
+                    isActive
                       ? "text-slate-900 font-semibold underline decoration-2 decoration-sky-600 underline-offset-4"
-                      : "border-b-2 border-transparent hover:border-slate-300 hover:text-slate-900"
+                      : isOpen
+                        ? "text-slate-900 underline decoration-2 decoration-slate-300 underline-offset-4"
+                        : "border-b-2 border-transparent hover:border-slate-300 hover:text-slate-900"
                   }`}
                   aria-haspopup="true"
                   aria-expanded={isOpen}
@@ -87,6 +89,12 @@ export function Navbar() {
                 >
                   {item.label}
                 </Link>
+
+                {/* Invisible bridge so cursor can move from link to dropdown without leaving wrapper */}
+                <div
+                  className="absolute left-0 right-0 top-full h-2"
+                  aria-hidden="true"
+                />
 
                 <div
                   data-open={isOpen}
