@@ -10,4 +10,6 @@ export type Event = {
   rsvpUrl?: string
   flyerImageUrl?: string
   flyerImageAlt?: string
+  isFeatured?: boolean
+  order?: number
 }

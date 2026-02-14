@@ -12,6 +12,8 @@ export type EventCMS = {
   rsvpUrl?: string | null
   flyerImageUrl?: string | null
   flyerImageAlt?: string | null
+  isFeatured?: boolean | null
+  order?: number | null
 }
 
 const eventProjection = `
@@ -24,6 +26,8 @@ const eventProjection = `
   summary,
   description,
   rsvpUrl,
+  isFeatured,
+  order,
   "flyerImageUrl": flyerImage.asset->url,
   "flyerImageAlt": coalesce(flyerImage.alt, title)
 `
@@ -40,18 +44,18 @@ export async function getFeaturedUpcomingEvent(): Promise<EventCMS | null> {
   return results && results.length > 0 ? results[0] : null
 }
 
-/** Upcoming events: startDate >= (now - 1 day), order startDate asc, order asc, limited */
+/** Upcoming events: startDate >= (now - 1 day), sort by order asc then startDate asc, limited */
 export async function getUpcomingEvents(
   limit: number = 3,
 ): Promise<EventCMS[]> {
   const cutoff = cutoffPast()
-  const query = `*[_type == "event" && startDate >= $cutoff] | order(startDate asc, order asc) [0...$limit]{ ${eventProjection} }`
+  const query = `*[_type == "event" && startDate >= $cutoff] | order(order asc, startDate asc) [0...$limit]{ ${eventProjection} }`
   return client.fetch(query, { cutoff, limit })
 }
 
-/** Past events: startDate < now, order startDate desc, order desc, limited */
+/** Past events: startDate < now, sort by order desc then startDate desc, limited */
 export async function getPastEvents(limit: number = 12): Promise<EventCMS[]> {
   const cutoff = cutoffFuture()
-  const query = `*[_type == "event" && startDate < $cutoff] | order(startDate desc, order desc) [0...$limit]{ ${eventProjection} }`
+  const query = `*[_type == "event" && startDate < $cutoff] | order(order desc, startDate desc) [0...$limit]{ ${eventProjection} }`
   return client.fetch(query, { cutoff, limit })
 }
