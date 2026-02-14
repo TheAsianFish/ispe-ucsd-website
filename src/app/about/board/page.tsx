@@ -1,32 +1,47 @@
-"use client";
-
-import { useState } from "react";
-
-import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
+import Link from "next/link"
 import {
-  boardMembersByTerm,
-  boardTerms,
-  type BoardMember,
-  type BoardTerm,
-} from "@/content/mock";
-import { BoardMemberTile } from "@/components/cards/BoardMemberTile";
+  getCurrentBoard,
+  getBoardBySlug,
+  getAllBoardTerms,
+} from "@/sanity/lib/queries"
+import { Container } from "@/components/ui/Container"
+import { SectionHeading } from "@/components/ui/SectionHeading"
+import { BoardMemberTile } from "@/components/cards/BoardMemberTile"
+import { urlFor } from "@/sanity/lib/image"
 
-function getInitialTerm(terms: BoardTerm[]): BoardTerm | undefined {
-  return terms.find((t) => t.isCurrent) ?? terms[0];
+type PageProps = {
+  searchParams: Promise<{ term?: string }>
 }
 
-export default function BoardPage() {
-  const initialTerm = getInitialTerm(boardTerms);
-  const [activeTermSlug, setActiveTermSlug] = useState(
-    initialTerm?.slug ?? boardTerms[0]?.slug ?? "",
-  );
+export default async function BoardPage({ searchParams }: PageProps) {
+  const { term } = await searchParams
+  const [board, allTerms] = await Promise.all([
+    term ? getBoardBySlug(term) : getCurrentBoard(),
+    getAllBoardTerms(),
+  ])
 
-  const activeTerm =
-    boardTerms.find((term) => term.slug === activeTermSlug) ?? initialTerm;
+  const activeSlug = term ?? board?.slug?.current ?? null
 
-  const members: BoardMember[] =
-    (activeTerm && boardMembersByTerm[activeTerm.slug]) || [];
+  if (!board) {
+    return (
+      <div className="py-10 sm:py-12 lg:py-16">
+        <Container>
+          <p className="text-sm text-slate-600">No board data found.</p>
+        </Container>
+      </div>
+    )
+  }
+
+  const members = board.seats.map((seat) => ({
+    name: seat.person.name,
+    role: seat.role,
+    major: seat.person.major ?? "",
+    classYear: seat.person.classYear ?? "",
+    photo: seat.person.image
+      ? urlFor(seat.person.image).width(400).height(300).url()
+      : undefined,
+    linkedin: seat.person.linkedin,
+  }))
 
   return (
     <div className="py-10 sm:py-12 lg:py-16">
@@ -40,73 +55,49 @@ export default function BoardPage() {
           </h1>
           <p className="max-w-2xl text-sm text-slate-600 sm:text-base">
             The ISPE UCSD Student Chapter board helps plan programs, events, and
-            partnerships that support students each year. Use the term selector
-            to view current and past leadership teams.
+            partnerships that support students each year.
           </p>
         </header>
 
-        {/* Term switcher */}
-        <section aria-label="Board terms" className="space-y-3">
-          {/* Mobile select */}
-          <div className="sm:hidden">
-            <label
-              htmlFor="board-term"
-              className="mb-1 block text-xs font-medium text-slate-700"
-            >
-              Select board term
-            </label>
-            <select
-              id="board-term"
-              className="block w-full rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm text-slate-900 shadow-sm focus:border-sky-500 focus:outline-none focus:ring-2 focus:ring-sky-500"
-              value={activeTermSlug}
-              onChange={(event) => setActiveTermSlug(event.target.value)}
-            >
-              {boardTerms.map((term) => (
-                <option key={term.slug} value={term.slug}>
-                  {term.label}
-                  {term.isCurrent ? " (current)" : ""}
-                </option>
-              ))}
-            </select>
-          </div>
+        {allTerms.length > 0 && (
+          <section aria-label="Board terms" className="space-y-3">
+            <div className="flex flex-wrap items-center gap-2 rounded-full bg-slate-100 p-1 text-sm">
+              {allTerms.map((t) => {
+                const slug = t.slug?.current
+                const href = slug ? `/about/board?term=${slug}` : "/about/board"
+                const isActive =
+                  activeSlug === slug || (!term && t.isCurrent)
+                return (
+                  <Link
+                    key={slug ?? t.title}
+                    href={href}
+                    className={`rounded-full px-4 py-1.5 transition-colors ${
+                      isActive
+                        ? "bg-sky-600 text-white shadow-sm"
+                        : "text-slate-700 hover:bg-white"
+                    }`}
+                  >
+                    {t.title}
+                    {t.isCurrent ? " • Current" : ""}
+                  </Link>
+                )
+              })}
+            </div>
+          </section>
+        )}
 
-          {/* Desktop pill nav */}
-          <div className="hidden items-center gap-2 rounded-full bg-slate-100 p-1 text-sm sm:flex">
-            {boardTerms.map((term) => {
-              const isActive = term.slug === activeTermSlug;
-              return (
-                <button
-                  key={term.slug}
-                  type="button"
-                  className={`rounded-full px-4 py-1.5 transition-colors ${
-                    isActive
-                      ? "bg-sky-600 text-white shadow-sm"
-                      : "text-slate-700 hover:bg-white"
-                  }`}
-                  onClick={() => setActiveTermSlug(term.slug)}
-                  aria-pressed={isActive}
-                >
-                  {term.label}
-                  {term.isCurrent ? " • Current" : ""}
-                </button>
-              );
-            })}
-          </div>
-        </section>
-
-        {/* Board members */}
         <section
           aria-labelledby="board-members-heading"
           className="space-y-5 sm:space-y-6"
         >
           <SectionHeading
-            eyebrow={activeTerm?.label}
+            eyebrow={board.title}
             title="Board members"
             description={
               <p>
-                All names, roles, and majors here are placeholders. Future
-                officers can update this data or connect it to a CMS to keep
-                each term&apos;s board history accurate.
+                Board data is managed in Sanity. Officers can update names,
+                roles, and majors to keep each term&apos;s board history
+                accurate.
               </p>
             }
           />
@@ -128,6 +119,5 @@ export default function BoardPage() {
         </section>
       </Container>
     </div>
-  );
+  )
 }
-

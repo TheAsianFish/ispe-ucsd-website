@@ -25,7 +25,7 @@ export function Footer() {
                   aria-label="Discord"
                 >
                   <img
-                    src="/icons/discord.svg"
+                    src="/icons/discord-icon-svgrepo-com.svg"
                     alt=""
                     className="size-5"
                     aria-hidden
