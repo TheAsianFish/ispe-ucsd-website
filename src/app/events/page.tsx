@@ -4,6 +4,29 @@ import { Container } from "@/components/ui/Container";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { EventCard } from "@/components/cards/EventCard";
 import { events } from "@/content/mock";
+import type { Event } from "@/content/types";
+
+function mockEventToEvent(m: {
+  id: string;
+  name: string;
+  date: string;
+  location: string;
+  description: string;
+  rsvpUrl?: string;
+  imageUrl?: string;
+  imageAlt?: string;
+}): Event {
+  return {
+    id: m.id,
+    title: m.name,
+    startDate: m.date,
+    location: m.location,
+    summary: m.description,
+    rsvpUrl: m.rsvpUrl,
+    imageUrl: m.imageUrl,
+    imageAlt: m.imageAlt,
+  };
+}
 
 export const metadata: Metadata = {
   title: "Events",
@@ -57,7 +80,7 @@ export default function EventsPage() {
               className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
             >
               {upcoming.map((event) => (
-                <EventCard key={event.id} event={event} />
+                <EventCard key={event.id} event={mockEventToEvent(event)} />
               ))}
             </div>
           </section>
@@ -75,7 +98,7 @@ export default function EventsPage() {
               className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
             >
               {past.map((event) => (
-                <EventCard key={event.id} event={event} />
+                <EventCard key={event.id} event={mockEventToEvent(event)} />
               ))}
             </div>
           </section>

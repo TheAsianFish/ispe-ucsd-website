@@ -2,11 +2,11 @@ import Link from "next/link";
 
 import {
   boardTeaser,
-  events,
   hero,
   programs,
   resources,
 } from "@/content/mock";
+import { getUpcomingEvents } from "@/sanity/lib/queries/events";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -32,8 +32,18 @@ const pillars = [
   },
 ];
 
-export default function Home() {
-  const upcomingPreview = events.upcoming.slice(0, 3);
+export default async function Home() {
+  const cmsEvents = await getUpcomingEvents(3);
+  const upcomingPreview = cmsEvents.map((e) => ({
+    id: e._id,
+    title: e.title,
+    startDate: e.startDate,
+    location: e.location,
+    summary: e.summary,
+    rsvpUrl: e.rsvpUrl ?? undefined,
+    imageUrl: e.imageUrl ?? undefined,
+    imageAlt: e.imageAlt ?? undefined,
+  }));
   const programsPreview = programs.slice(0, 3);
   const resourcesPreview = resources.slice(0, 4);
 
