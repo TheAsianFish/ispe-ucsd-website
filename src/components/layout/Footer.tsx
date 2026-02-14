@@ -16,15 +16,20 @@ export function Footer() {
           <div className="space-y-3">
             <p className="text-base font-semibold text-slate-100">ISPE UCSD</p>
             <div className="flex items-center gap-3">
-              {siteMetadata.socials.website ? (
+              {siteMetadata.socials.discord ? (
                 <a
-                  href={siteMetadata.socials.website}
+                  href={siteMetadata.socials.discord}
                   target="_blank"
                   rel="noreferrer"
                   className="text-slate-300 hover:text-sky-300"
-                  aria-label="Website"
+                  aria-label="Discord"
                 >
-                  <span aria-hidden="true">🌐</span>
+                  <img
+                    src="/icons/discord.svg"
+                    alt=""
+                    className="size-5"
+                    aria-hidden
+                  />
                 </a>
               ) : null}
               {siteMetadata.socials.linkedin ? (

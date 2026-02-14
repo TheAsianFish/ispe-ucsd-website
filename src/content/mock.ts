@@ -17,6 +17,7 @@ export type SiteMetadata = {
   tagline: string;
   email: string;
   socials: {
+    discord?: string;
     instagram?: string;
     linkedin?: string;
     website?: string;
@@ -94,6 +95,7 @@ export const siteMetadata: SiteMetadata = {
   tagline: "Connecting students to the world of pharmaceutical engineering.",
   email: "ispe@ucsd.edu",
   socials: {
+    discord: "https://discord.gg/MbCAByycka",
     instagram: "https://instagram.com/ispeucsd",
     linkedin: "https://linkedin.com/company/ispe-ucsd",
     website: "https://ispe.ucsd.edu",
