@@ -35,7 +35,12 @@ export function Footer() {
                   className="text-slate-300 hover:text-sky-300"
                   aria-label="LinkedIn"
                 >
-                  <span aria-hidden="true">in</span>
+                  <img
+                    src="/icons/linkedin-svgrepo-com.svg"
+                    alt=""
+                    className="size-5"
+                    aria-hidden
+                  />
                 </a>
               ) : null}
               {siteMetadata.socials.instagram ? (
@@ -46,7 +51,12 @@ export function Footer() {
                   className="text-slate-300 hover:text-sky-300"
                   aria-label="Instagram"
                 >
-                  <span aria-hidden="true">⌾</span>
+                  <img
+                    src="/icons/Instagram_logo_2016.svg"
+                    alt=""
+                    className="size-5"
+                    aria-hidden
+                  />
                 </a>
               ) : null}
             </div>
