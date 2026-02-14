@@ -6,7 +6,11 @@ import {
   programs,
   resources,
 } from "@/content/mock";
-import { getUpcomingEvents } from "@/sanity/lib/queries/events";
+import {
+  getFeaturedUpcomingEvent,
+  getUpcomingEvents,
+} from "@/sanity/lib/queries/events";
+import type { Event } from "@/content/types";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
 import { SectionHeading } from "@/components/ui/SectionHeading";
@@ -32,18 +36,45 @@ const pillars = [
   },
 ];
 
-export default async function Home() {
-  const cmsEvents = await getUpcomingEvents(3);
-  const upcomingPreview = cmsEvents.map((e) => ({
+function cmsToEvent(e: {
+  _id: string;
+  title: string;
+  slug: string | null;
+  startDate: string;
+  endDate?: string | null;
+  location: string;
+  summary: string;
+  description?: string | null;
+  rsvpUrl?: string | null;
+  flyerImageUrl?: string | null;
+  flyerImageAlt?: string | null;
+}): Event {
+  return {
     id: e._id,
     title: e.title,
+    slug: e.slug ?? "",
     startDate: e.startDate,
+    endDate: e.endDate ?? undefined,
     location: e.location,
     summary: e.summary,
+    description: e.description ?? undefined,
     rsvpUrl: e.rsvpUrl ?? undefined,
-    imageUrl: e.imageUrl ?? undefined,
-    imageAlt: e.imageAlt ?? undefined,
-  }));
+    flyerImageUrl: e.flyerImageUrl ?? undefined,
+    flyerImageAlt: e.flyerImageAlt ?? undefined,
+  };
+}
+
+export default async function Home() {
+  const [featuredCMS, upcomingCMS] = await Promise.all([
+    getFeaturedUpcomingEvent(),
+    getUpcomingEvents(4),
+  ]);
+  const featured = featuredCMS ? cmsToEvent(featuredCMS) : null;
+  const upcomingFiltered = featured
+    ? upcomingCMS.filter((e) => e._id !== featured.id).slice(0, 3)
+    : upcomingCMS.slice(0, 3);
+  const upcomingPreview = upcomingFiltered.map(cmsToEvent);
+
   const programsPreview = programs.slice(0, 3);
   const resourcesPreview = resources.slice(0, 4);
 
@@ -101,18 +132,28 @@ export default async function Home() {
             title="Upcoming events at a glance."
             description="Stay informed about panels, workshops, and visits that help you explore careers in pharmaceutical engineering."
           />
-          {upcomingPreview.length === 0 ? (
+          {featured ? (
+            <div className="space-y-2">
+              <p className="text-xs font-semibold uppercase tracking-wide text-sky-700">
+                Featured
+              </p>
+              <div className="w-full max-w-2xl">
+                <EventCard event={featured} featured />
+              </div>
+            </div>
+          ) : null}
+          {upcomingPreview.length === 0 && !featured ? (
             <p className="text-sm text-slate-600">
               We don&apos;t have any upcoming events listed yet. Check back
               soon or follow our social channels for updates.
             </p>
-          ) : (
+          ) : upcomingPreview.length > 0 ? (
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {upcomingPreview.map((event) => (
                 <EventCard key={event.id} event={event} />
               ))}
             </div>
-          )}
+          ) : null}
           <div>
             <Link
               href="/events"

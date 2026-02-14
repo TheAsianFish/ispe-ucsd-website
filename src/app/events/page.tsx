@@ -19,12 +19,13 @@ function mockEventToEvent(m: {
   return {
     id: m.id,
     title: m.name,
+    slug: "",
     startDate: m.date,
     location: m.location,
     summary: m.description,
     rsvpUrl: m.rsvpUrl,
-    imageUrl: m.imageUrl,
-    imageAlt: m.imageAlt,
+    flyerImageUrl: m.imageUrl,
+    flyerImageAlt: m.imageAlt,
   };
 }
 

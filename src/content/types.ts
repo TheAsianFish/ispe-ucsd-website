@@ -1,10 +1,13 @@
 export type Event = {
   id: string
   title: string
+  slug: string
   startDate: string
+  endDate?: string
   location: string
   summary: string
+  description?: string
   rsvpUrl?: string
-  imageUrl?: string
-  imageAlt?: string
+  flyerImageUrl?: string
+  flyerImageAlt?: string
 }
