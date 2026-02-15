@@ -96,7 +96,7 @@ export const siteMetadata: SiteMetadata = {
   email: "ispe@ucsd.edu",
   socials: {
     discord: "https://discord.gg/MbCAByycka",
-    instagram: "https://instagram.com/ispeucsd",
+    instagram: "https://instagram.com/ispe.at.ucsd",
     linkedin: "https://linkedin.com/company/ispe-ucsd",
     website: "https://ispe.ucsd.edu",
   },
