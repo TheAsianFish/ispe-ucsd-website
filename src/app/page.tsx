@@ -196,7 +196,7 @@ export default async function Home() {
             id="home-featured-photos"
             className="text-xs font-semibold uppercase tracking-wide text-sky-700"
           >
-            Featured
+            Featured Photos
           </h2>
           <FeaturedPhotosTrack photos={FEATURED_PHOTOS} />
           <p className="text-xs text-slate-500">

@@ -19,8 +19,11 @@ type FeaturedPhotosTrackProps = {
 export function FeaturedPhotosTrack({ photos }: FeaturedPhotosTrackProps) {
   const trackRef = useRef<HTMLDivElement | null>(null);
   const mouseDownAtRef = useRef<number>(0);
-  const prevPercentageRef = useRef<number>(0);
-  const currentPercentageRef = useRef<number>(0);
+  // Clamp range [-88, -12] minimizes end whitespace while keeping a small margin (parallax preserved).
+  const MIN_PCT = -88;
+  const MAX_PCT = -12;
+  const prevPercentageRef = useRef<number>(MAX_PCT);
+  const currentPercentageRef = useRef<number>(MAX_PCT);
   const [isDragging, setIsDragging] = useState(false);
 
   // Parallax: object-position follows viewport position (0% left, 100% right).
@@ -49,10 +52,10 @@ export function FeaturedPhotosTrack({ photos }: FeaturedPhotosTrackProps) {
     const track = trackRef.current;
     if (!track) return;
     track.animate(
-      { transform: `translate(${prevPercentageRef.current}%, -50%)` },
+      { transform: `translate(${MAX_PCT}%, -50%)` },
       { duration: 0, fill: "forwards" }
     );
-    setImagePositions(prevPercentageRef.current);
+    setImagePositions(MAX_PCT);
   }, [photos.length]);
 
   useEffect(() => {
@@ -78,7 +81,7 @@ export function FeaturedPhotosTrack({ photos }: FeaturedPhotosTrackProps) {
       const maxDelta = window.innerWidth / 2;
       const percentage = (mouseDelta / maxDelta) * -100;
       let nextPercentage = prevPercentageRef.current + percentage;
-      nextPercentage = Math.max(-100, Math.min(0, nextPercentage));
+      nextPercentage = Math.max(MIN_PCT, Math.min(MAX_PCT, nextPercentage));
 
       currentPercentageRef.current = nextPercentage;
 
@@ -111,7 +114,7 @@ export function FeaturedPhotosTrack({ photos }: FeaturedPhotosTrackProps) {
       const current = prevPercentageRef.current;
       const step =
         -Math.sign(e.deltaY) * Math.min(3, Math.abs(e.deltaY) * 0.02);
-      const nextPercentage = Math.max(-100, Math.min(0, current + step));
+      const nextPercentage = Math.max(MIN_PCT, Math.min(MAX_PCT, current + step));
       prevPercentageRef.current = nextPercentage;
       currentPercentageRef.current = nextPercentage;
       track.animate(
@@ -127,11 +130,11 @@ export function FeaturedPhotosTrack({ photos }: FeaturedPhotosTrackProps) {
 
   return (
     <section
-      className={`relative h-[70vmin] max-h-[420px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 select-none ${
+      className={`relative h-[48vmin] max-h-[380px] w-full overflow-hidden rounded-2xl border border-slate-200 bg-slate-100 select-none ${
         isDragging ? "cursor-grabbing" : "cursor-grab"
       }`}
       aria-label="Featured photos"
-      style={{ minHeight: 280 }}
+      style={{ minHeight: 260 }}
     >
       {/* Barrier viewport: track centered with left-50% top-50%, translate(percentage%, -50%) */}
       <div
@@ -139,7 +142,7 @@ export function FeaturedPhotosTrack({ photos }: FeaturedPhotosTrackProps) {
         className="absolute left-1/2 top-1/2 flex w-max gap-[4vmin]"
         style={{
           pointerEvents: "auto",
-          transform: "translate(0%, -50%)",
+          transform: `translate(${MAX_PCT}%, -50%)`,
         }}
         role="list"
       >
@@ -149,17 +152,18 @@ export function FeaturedPhotosTrack({ photos }: FeaturedPhotosTrackProps) {
             role="listitem"
             className="relative shrink-0 overflow-hidden rounded-xl bg-slate-200"
             style={{
-              width: "20vmin",
-              minWidth: "20vmin",
-              height: "44vmin",
+              width: "34vmin",
+              minWidth: "34vmin",
+              height: "34vmin",
             }}
           >
+            {/* Square frame forces horizontal crop with object-fit:cover, so object-position x% has room to pan = parallax. A wide (landscape) frame would let the image fit full width and kill the effect. */}
             <Image
               src={p.src}
               alt={p.alt ?? `Featured photo ${idx + 1}`}
               fill
               draggable={false}
-              sizes="20vmin"
+              sizes="34vmin"
               className="object-cover transition-[object-position] duration-200 ease-out"
               style={{ objectPosition: "100% 50%" }}
               priority={idx < 2}
