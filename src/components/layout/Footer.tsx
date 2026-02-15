@@ -1,18 +1,28 @@
+import Link from "next/link";
 import { Container } from "@/components/ui/Container";
 import { siteMetadata } from "@/content/mock";
+
+const ISPE_LOGO_PATH = "/icons/idgyckcusI_1771114222524.svg";
 
 export function Footer() {
   return (
     <footer className="border-t border-slate-800 bg-slate-900 text-slate-300">
       <Container className="flex flex-col gap-10 py-12 text-base sm:flex-row sm:items-center sm:justify-between">
-        {/* Left: logo placeholder, name, socials */}
+        {/* Left: logo, name, socials */}
         <div className="flex items-start gap-4">
-          <div
-            className="flex h-12 w-12 items-center justify-center rounded-full border border-sky-400/70 bg-slate-900 text-sm font-semibold text-sky-400"
-            aria-hidden="true"
+          <Link
+            href="/"
+            className="flex shrink-0 items-center focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-offset-2 focus:ring-offset-slate-900 rounded"
+            aria-label="ISPE UCSD – Home"
           >
-            LOGO
-          </div>
+            <img
+              src={ISPE_LOGO_PATH}
+              alt=""
+              width={258}
+              height={83}
+              className="h-14 w-auto sm:h-16"
+            />
+          </Link>
           <div className="space-y-3">
             <p className="text-base font-semibold text-slate-100">ISPE UCSD</p>
             <div className="flex items-center gap-3">
