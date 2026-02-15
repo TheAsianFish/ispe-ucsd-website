@@ -70,16 +70,18 @@ export default async function Home() {
         <Container className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)] lg:items-center">
           <div className="space-y-6">
             <p className="text-xs font-semibold uppercase tracking-wide text-sky-700">
-              UC San Diego &middot; Student Chapter
+              UC SAN DIEGO • STUDENT CHAPTER
             </p>
             <h1
               id="home-hero"
               className="text-3xl font-semibold tracking-tight text-slate-900 sm:text-4xl lg:text-5xl"
             >
-              {hero.title}
+              Launch your career in pharma and biotech at UC San Diego.
             </h1>
             <p className="max-w-xl text-base text-slate-600 sm:text-lg">
-              {hero.subtitle}
+              We connect students to industry professionals, site visits, and
+              practical experience through events, programs, and a focused
+              community.
             </p>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href={hero.primaryCta.href}>
