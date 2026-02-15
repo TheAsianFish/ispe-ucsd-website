@@ -10,6 +10,7 @@ import {
   getFeaturedUpcomingEvent,
   getUpcomingEvents,
 } from "@/sanity/lib/queries/events";
+import { getActiveAnnouncements } from "@/sanity/lib/queries/announcements";
 import type { Event } from "@/content/types";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
@@ -65,9 +66,10 @@ function cmsToEvent(e: {
 }
 
 export default async function Home() {
-  const [featuredCMS, upcomingCMS] = await Promise.all([
+  const [featuredCMS, upcomingCMS, announcements] = await Promise.all([
     getFeaturedUpcomingEvent(),
     getUpcomingEvents(4),
+    getActiveAnnouncements(),
   ]);
   const featured = featuredCMS ? cmsToEvent(featuredCMS) : null;
   const upcomingFiltered = featured
@@ -123,6 +125,32 @@ export default async function Home() {
           </div>
         </Container>
       </section>
+
+      {/* Announcements banner */}
+      {announcements.length > 0 ? (
+        <section aria-label="Announcements">
+          <Container>
+            <div className="space-y-3 rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 sm:px-5 sm:py-4">
+              {announcements.map((a) => (
+                <div key={a.id} className="space-y-1">
+                  <p className="text-sm font-semibold text-slate-900">{a.title}</p>
+                  <p className="text-sm text-slate-600">{a.body}</p>
+                  {a.href && (
+                    <p>
+                      <a
+                        href={a.href}
+                        className="text-sm font-medium text-sky-700 underline-offset-2 hover:underline"
+                      >
+                        {a.hrefLabel ?? "Learn more"}
+                      </a>
+                    </p>
+                  )}
+                </div>
+              ))}
+            </div>
+          </Container>
+        </section>
+      ) : null}
 
       {/* Upcoming events preview */}
       <section aria-labelledby="home-upcoming-events">
