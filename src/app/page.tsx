@@ -18,23 +18,19 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { EventCard } from "@/components/cards/EventCard";
 import { ProgramCard } from "@/components/cards/ProgramCard";
 import { ResourceCard } from "@/components/cards/ResourceCard";
+import { FeaturedPhotosTrack } from "@/components/home/FeaturedPhotosTrack";
+import type { PhotoItem } from "@/components/home/FeaturedPhotosTrack";
 
-const pillars = [
-  {
-    title: "Explore careers",
-    description:
-      "Learn what roles exist across pharma, biotech, and related industries through panels, workshops, and conversations with professionals.",
-  },
-  {
-    title: "Build skills",
-    description:
-      "Strengthen your understanding of GxP, technical fundamentals, and professional skills that support a transition into industry.",
-  },
-  {
-    title: "Grow community",
-    description:
-      "Connect with peers at UC San Diego who are also interested in pharmaceutical engineering and nearby fields.",
-  },
+// Temporary placeholder photos for the featured track. TODO: Replace with Sanity (featuredPhotos or photo documents).
+const FEATURED_PHOTOS: PhotoItem[] = [
+  { src: "https://picsum.photos/seed/f1/800/600", alt: "Featured 1" },
+  { src: "https://picsum.photos/seed/f2/800/600", alt: "Featured 2" },
+  { src: "https://picsum.photos/seed/f3/800/600", alt: "Featured 3" },
+  { src: "https://picsum.photos/seed/f4/800/600", alt: "Featured 4" },
+  { src: "https://picsum.photos/seed/f5/800/600", alt: "Featured 5" },
+  { src: "https://picsum.photos/seed/f6/800/600", alt: "Featured 6" },
+  { src: "https://picsum.photos/seed/f7/800/600", alt: "Featured 7" },
+  { src: "https://picsum.photos/seed/f8/800/600", alt: "Featured 8" },
 ];
 
 function cmsToEvent(e: {
@@ -193,38 +189,19 @@ export default async function Home() {
         </Container>
       </section>
 
-      {/* What we do / pillars */}
-      <section aria-labelledby="home-pillars">
-        <Container className="space-y-6">
-          <SectionHeading
-            eyebrow="What we do"
-            title="Helping students connect classroom learning to industry."
-            description="ISPE UCSD supports students who are curious about how medicines are developed, manufactured, and delivered to patients."
-          />
-          <div
-            id="home-pillars"
-            className="grid gap-4 sm:grid-cols-3 sm:gap-6"
+      {/* Featured photos track (drag to slide, images reveal behind barrier) */}
+      <section aria-labelledby="home-featured-photos">
+        <Container className="space-y-4">
+          <h2
+            id="home-featured-photos"
+            className="text-xs font-semibold uppercase tracking-wide text-sky-700"
           >
-            {pillars.map((pillar) => (
-              <article
-                key={pillar.title}
-                className="flex flex-col gap-2 rounded-xl border border-slate-200 bg-white p-4 shadow-sm"
-              >
-                <div className="flex items-center gap-2">
-                  <span
-                    aria-hidden="true"
-                    className="flex h-8 w-8 items-center justify-center rounded-full bg-sky-100 text-sky-700"
-                  >
-                    ●
-                  </span>
-                  <h3 className="text-sm font-semibold text-slate-900 sm:text-base">
-                    {pillar.title}
-                  </h3>
-                </div>
-                <p className="text-sm text-slate-600">{pillar.description}</p>
-              </article>
-            ))}
-          </div>
+            Featured
+          </h2>
+          <FeaturedPhotosTrack photos={FEATURED_PHOTOS} />
+          <p className="text-xs text-slate-500">
+            Drag or scroll to browse photos.
+          </p>
         </Container>
       </section>
 
