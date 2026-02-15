@@ -152,9 +152,9 @@ export function FeaturedPhotosTrack({ photos }: FeaturedPhotosTrackProps) {
             role="listitem"
             className="relative shrink-0 overflow-hidden rounded-xl bg-slate-200"
             style={{
-              width: "34vmin",
-              minWidth: "34vmin",
-              height: "34vmin",
+              width: "36vmin",
+              minWidth: "36vmin",
+              height: "36vmin",
             }}
           >
             {/* Square frame forces horizontal crop with object-fit:cover, so object-position x% has room to pan = parallax. A wide (landscape) frame would let the image fit full width and kill the effect. */}
@@ -163,7 +163,7 @@ export function FeaturedPhotosTrack({ photos }: FeaturedPhotosTrackProps) {
               alt={p.alt ?? `Featured photo ${idx + 1}`}
               fill
               draggable={false}
-              sizes="34vmin"
+              sizes="36vmin"
               className="object-cover transition-[object-position] duration-200 ease-out"
               style={{ objectPosition: "100% 50%" }}
               priority={idx < 2}
