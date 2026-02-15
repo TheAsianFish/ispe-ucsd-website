@@ -1,5 +1,27 @@
 import { client } from "./client"
 
+export type FeaturedPhotoItem = {
+  alt?: string | null
+  asset: unknown
+}
+
+export type FeaturedPhotosResult = {
+  photos: FeaturedPhotoItem[]
+}
+
+/** First featuredPhotos document, or { photos: [] } if none or on error. */
+export async function getFeaturedPhotos(): Promise<FeaturedPhotosResult> {
+  try {
+    const doc = await client.fetch<FeaturedPhotosResult | null>(
+      `*[_type == "featuredPhotos"][0]{ photos[]{ alt, asset } }`,
+    )
+    if (!doc?.photos?.length) return { photos: [] }
+    return { photos: doc.photos }
+  } catch {
+    return { photos: [] }
+  }
+}
+
 export type BoardSeat = {
   role: string
   order?: number

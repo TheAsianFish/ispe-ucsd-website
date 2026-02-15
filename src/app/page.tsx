@@ -18,20 +18,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { EventCard } from "@/components/cards/EventCard";
 import { ProgramCard } from "@/components/cards/ProgramCard";
 import { ResourceCard } from "@/components/cards/ResourceCard";
-import { FeaturedPhotosTrack } from "@/components/home/FeaturedPhotosTrack";
-import type { PhotoItem } from "@/components/home/FeaturedPhotosTrack";
-
-// Temporary placeholder photos for the featured track. TODO: Replace with Sanity (featuredPhotos or photo documents).
-const FEATURED_PHOTOS: PhotoItem[] = [
-  { src: "https://picsum.photos/seed/f1/800/600", alt: "Featured 1" },
-  { src: "https://picsum.photos/seed/f2/800/600", alt: "Featured 2" },
-  { src: "https://picsum.photos/seed/f3/800/600", alt: "Featured 3" },
-  { src: "https://picsum.photos/seed/f4/800/600", alt: "Featured 4" },
-  { src: "https://picsum.photos/seed/f5/800/600", alt: "Featured 5" },
-  { src: "https://picsum.photos/seed/f6/800/600", alt: "Featured 6" },
-  { src: "https://picsum.photos/seed/f7/800/600", alt: "Featured 7" },
-  { src: "https://picsum.photos/seed/f8/800/600", alt: "Featured 8" },
-];
+import { FeaturedPhotosSection } from "@/components/FeaturedPhotosSection";
 
 function cmsToEvent(e: {
   _id: string;
@@ -189,21 +176,8 @@ export default async function Home() {
         </Container>
       </section>
 
-      {/* Featured photos track (drag to slide, images reveal behind barrier) */}
-      <section aria-labelledby="home-featured-photos">
-        <Container className="space-y-4">
-          <h2
-            id="home-featured-photos"
-            className="text-xs font-semibold uppercase tracking-wide text-sky-700"
-          >
-            Featured Photos
-          </h2>
-          <FeaturedPhotosTrack photos={FEATURED_PHOTOS} />
-          <p className="text-xs text-slate-500">
-            Drag or scroll to browse photos.
-          </p>
-        </Container>
-      </section>
+      {/* Featured photos slider (CMS-driven; no section if empty) */}
+      <FeaturedPhotosSection />
 
       {/* Programs preview */}
       <section aria-labelledby="home-programs">
