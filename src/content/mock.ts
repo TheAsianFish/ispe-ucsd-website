@@ -91,7 +91,7 @@ export type BoardMember = {
 };
 
 export const siteMetadata: SiteMetadata = {
-  name: "ISPE UCSD Student Chapter",
+  name: "ISPE UCSD",
   tagline: "Connecting students to the world of pharmaceutical engineering.",
   email: "ispe@ucsd.edu",
   socials: {

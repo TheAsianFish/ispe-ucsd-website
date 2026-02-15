@@ -2,9 +2,9 @@ import Link from "next/link";
 
 import {
   boardTeaser,
-  hero,
   programs,
   resources,
+  siteMetadata,
 } from "@/content/mock";
 import {
   getFeaturedUpcomingEvent,
@@ -69,7 +69,7 @@ export default async function Home() {
       <section aria-labelledby="home-hero">
         <Container className="grid gap-10 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.4fr)] lg:items-center">
           <div className="space-y-6">
-            <p className="text-xs font-semibold uppercase tracking-wide text-sky-700">
+            <p className="-mb-0.3 text-lg font-semibold uppercase tracking-wide text-sky-700">
               UC SAN DIEGO • STUDENT CHAPTER
             </p>
             <h1
@@ -84,37 +84,69 @@ export default async function Home() {
               community.
             </p>
             <div className="flex flex-wrap gap-3">
-              <ButtonLink href={hero.primaryCta.href}>
-                {hero.primaryCta.label}
-              </ButtonLink>
-              <ButtonLink variant="secondary" href={hero.secondaryCta.href}>
-                {hero.secondaryCta.label}
+              <ButtonLink href="/membership">Join the community</ButtonLink>
+              <ButtonLink variant="secondary" href="/events">
+                View upcoming events
               </ButtonLink>
             </div>
           </div>
           <div className="space-y-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6">
             <h2 className="text-sm font-semibold text-slate-900">
-              What you can expect
+              Why join ISPE UCSD?
             </h2>
             <ul className="space-y-3 text-sm text-slate-600">
-              <li>Regular events with industry professionals and alumni.</li>
-              <li>Opportunities to visit local biotech and pharma sites.</li>
-              <li>
-                A student community focused on careers in pharma and biotech.
-              </li>
+              <li>Direct access to real industry</li>
+              <li>Professional speakers and alumni connections</li>
+              <li>Leadership + internship opportunities</li>
+              <li>A community focused on pharma careers</li>
             </ul>
-            <p className="text-xs text-slate-500">
-              All details are placeholders. Future officers can plug in real
-              content or connect this site to a CMS when ready.
-            </p>
+            <div className="border-t border-slate-200 pt-3">
+              <p className="mb-2 text-xs font-medium text-slate-500">
+                Quick links
+              </p>
+              <div className="flex flex-wrap gap-3 text-sm">
+                {siteMetadata.socials.instagram && (
+                  <a
+                    href={siteMetadata.socials.instagram}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="font-medium text-sky-700 underline-offset-2 hover:underline"
+                  >
+                    Instagram
+                  </a>
+                )}
+                {siteMetadata.socials.discord && (
+                  <a
+                    href={siteMetadata.socials.discord}
+                    target="_blank"
+                    rel="noreferrer noopener"
+                    className="font-medium text-sky-700 underline-offset-2 hover:underline"
+                  >
+                    Discord
+                  </a>
+                )}
+                <a
+                  href={`mailto:${siteMetadata.email}`}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                  className="font-medium text-sky-700 underline-offset-2 hover:underline"
+                >
+                  Email
+                </a>
+              </div>
+            </div>
           </div>
         </Container>
       </section>
 
       {/* Announcements banner */}
       {announcements.length > 0 ? (
-        <section aria-label="Announcements">
-          <Container>
+        <section aria-labelledby="home-announcements">
+          <Container className="space-y-6">
+            <SectionHeading
+              eyebrow="Announcements"
+              title="Important updates from the board."
+            />
             <div className="space-y-3 rounded-xl border border-sky-200 bg-sky-50 px-4 py-3 sm:px-5 sm:py-4">
               {announcements.map((a) => (
                 <div key={a.id} className="space-y-1">
@@ -235,8 +267,8 @@ export default async function Home() {
         </Container>
       </section>
 
-      {/* Final membership CTA */}
-      <section aria-labelledby="home-membership-cta">
+      {/* Final membership CTA (primary hero CTA scrolls here via #membership) */}
+      <section id="membership" aria-labelledby="home-membership-cta">
         <Container>
           <div className="rounded-2xl bg-sky-600 px-6 py-8 text-white shadow-sm sm:px-8 md:flex md:items-center md:justify-between">
             <div className="space-y-2 md:max-w-xl">

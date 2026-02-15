@@ -10,10 +10,20 @@ export const urlFor = (source: SanityImageSource) => {
   return builder.image(source)
 }
 
-/** Square 800×800 crop for featured photos so portrait/landscape uploads don't break the slider. */
+/** Square 800×800 crop for featured photos (e.g. thumbnails). */
 export function urlForFeaturedPhoto(source: SanityImageSource): string {
   return urlFor(source)
     .width(800)
+    .height(800)
+    .fit('crop')
+    .auto('format')
+    .url()
+}
+
+/** Landscape crop for the slider so images overflow horizontally in the square card → parallax works. */
+export function urlForFeaturedPhotoSlider(source: SanityImageSource): string {
+  return urlFor(source)
+    .width(1200)
     .height(800)
     .fit('crop')
     .auto('format')

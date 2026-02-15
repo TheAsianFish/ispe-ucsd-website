@@ -1,7 +1,7 @@
 import { Container } from "@/components/ui/Container";
 import { FeaturedPhotosTrack } from "@/components/home/FeaturedPhotosTrack";
 import { getFeaturedPhotos } from "@/sanity/lib/queries";
-import { urlForFeaturedPhoto } from "@/sanity/lib/image";
+import { urlForFeaturedPhotoSlider } from "@/sanity/lib/image";
 import type { SanityImageSource } from "@sanity/image-url/lib/types/types";
 
 export async function FeaturedPhotosSection() {
@@ -9,7 +9,7 @@ export async function FeaturedPhotosSection() {
   if (!photos?.length) return null;
 
   const mappedPhotos = photos.map((photo) => ({
-    src: urlForFeaturedPhoto(photo.asset as SanityImageSource),
+    src: urlForFeaturedPhotoSlider(photo.asset as SanityImageSource),
     alt: photo.alt ?? undefined,
   }));
 
