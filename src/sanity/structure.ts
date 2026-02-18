@@ -12,7 +12,14 @@ export const structure: StructureResolver = (S) =>
             .schemaType('aboutPage')
             .documentId('aboutPage'),
         ),
+      S.listItem()
+        .title('Membership Page')
+        .child(
+          S.document()
+            .schemaType('membershipPage')
+            .documentId('membershipPage'),
+        ),
       ...S.documentTypeListItems().filter(
-        (item) => item.getId() !== 'aboutPage',
+        (item) => item.getId() !== 'aboutPage' && item.getId() !== 'membershipPage',
       ),
     ])

@@ -36,3 +36,30 @@ export type Announcement = {
   href: string | null
   hrefLabel: string | null
 }
+
+export type MembershipPageContent = {
+  title: string | null
+  heroHeadline: string | null
+  heroSubheadline: string | null
+  primaryCtaLabel: string | null
+  primaryCtaUrl: string | null
+  secondaryCtaLabel: string | null
+  secondaryCtaUrl: string | null
+  highlights: string[] | null
+  quickLinks: {
+    discordUrl: string | null
+    instagramUrl: string | null
+    emailListUrl: string | null
+    contactEmail: string | null
+  } | null
+  chapterVsNational: {
+    sectionTitle: string | null
+    chapterTitle: string | null
+    chapterBullets: string[] | null
+    nationalTitle: string | null
+    nationalBullets: string[] | null
+    nationalFeeText: string | null
+    nationalJoinUrl: string | null
+  } | null
+  faq: Array<{ question: string | null; answer: string | null }> | null
+}

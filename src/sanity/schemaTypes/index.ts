@@ -6,7 +6,8 @@ import { person } from './person'
 import { boardSeat } from './boardSeat'
 import { event } from './event'
 import { featuredPhotos } from './featuredPhotos'
+import { membershipPage } from './membershipPage'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [aboutPage, announcement, boardTerm, person, boardSeat, event, featuredPhotos],
+  types: [aboutPage, announcement, boardTerm, person, boardSeat, event, featuredPhotos, membershipPage],
 }
