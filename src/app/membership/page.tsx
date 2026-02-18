@@ -198,17 +198,20 @@ export default async function MembershipPage() {
                 external: false,
               },
             ]
-              .filter(Boolean)
+              .filter(
+                (x): x is { label: string; href: string; external: boolean } =>
+                  Boolean(x),
+              )
               .map((item, i) => (
                 <span key={i}>
                   {i > 0 && ", "}
                   <a
-                    href={item!.href}
-                    target={item!.external ? "_blank" : undefined}
-                    rel={item!.external ? "noreferrer noopener" : undefined}
+                    href={item.href}
+                    target={item.external ? "_blank" : undefined}
+                    rel={item.external ? "noreferrer noopener" : undefined}
                     className="font-medium text-sky-700 underline-offset-2 hover:underline"
                   >
-                    {item!.label}
+                    {item.label}
                   </a>
                 </span>
               ))}
