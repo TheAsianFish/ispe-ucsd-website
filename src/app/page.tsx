@@ -1,10 +1,6 @@
 import Link from "next/link";
 
-import {
-  boardTeaser,
-  resources,
-  siteMetadata,
-} from "@/content/mock";
+import { resources, siteMetadata } from "@/content/mock";
 import type { Program } from "@/content/types";
 import {
   getFeaturedUpcomingEvent,
@@ -305,11 +301,6 @@ export default async function Home() {
               </ButtonLink>
               <ButtonLink href="/contact">Contact the board</ButtonLink>
             </div>
-          </div>
-          <div className="mt-4 text-xs text-slate-500">
-            <p>
-              Board teaser: {boardTeaser.heading} &mdash; {boardTeaser.body}
-            </p>
           </div>
         </Container>
       </section>
