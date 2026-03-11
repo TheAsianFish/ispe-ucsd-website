@@ -10,6 +10,9 @@ export const metadata: Metadata = {
   title: "About",
 };
 
+/** Revalidate this page at most every 60 seconds so Sanity edits show on Vercel. */
+export const revalidate = 60;
+
 const DEFAULTS = {
   title: "About the ISPE UCSD Student Chapter.",
   intro:

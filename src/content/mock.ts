@@ -1,3 +1,6 @@
+/** Use @/content/types Program for app; here only for mock array shape. */
+import type { Program } from "@/content/types";
+
 export type NavItem = {
   label: string;
   href: string;
@@ -46,12 +49,6 @@ export type Event = {
   rsvpUrl?: string;
   imageUrl?: string;
   imageAlt?: string;
-};
-
-export type Program = {
-  id: string;
-  title: string;
-  description: string;
 };
 
 export type Resource = {
@@ -203,24 +200,28 @@ export const events: { upcoming: Event[]; past: Event[] } = {
 export const programs: Program[] = [
   {
     id: "program-mentorship",
+    slug: "mentorship",
     title: "Mentorship & Peer Support",
     description:
       "Connect with peers and industry-aligned mentors who can share insights on coursework, recruiting, and navigating opportunities in pharma and biotech.",
   },
   {
     id: "program-professional-development",
+    slug: "professional-development",
     title: "Professional Development",
     description:
       "Workshops and panels on topics such as resumes, interviews, GMP/GxP basics, and transitioning from academia to industry roles.",
   },
   {
     id: "program-site-visits",
+    slug: "facility-tours",
     title: "Facility Tours & Site Visits",
     description:
       "Experience real manufacturing and R&D environments through facility tours and visits to local biotech and pharma companies.",
   },
   {
     id: "program-community",
+    slug: "community",
     title: "Community & Networking",
     description:
       "Meet other students interested in pharmaceutical engineering and build a community that supports your academic and career goals.",

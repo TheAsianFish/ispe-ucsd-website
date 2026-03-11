@@ -37,6 +37,21 @@ export type Announcement = {
   hrefLabel: string | null
 }
 
+/** Program for cards and optional detail. slug present => link to /programs/[slug]. */
+export type Program = {
+  id: string
+  title: string
+  description: string
+  slug?: string
+  overview?: string
+  howItWorks?: string[]
+  commitment?: string[]
+  benefits?: string[]
+  whoItsFor?: string
+  ctaLabel?: string
+  ctaUrl?: string
+}
+
 export type MembershipPageContent = {
   title: string | null
   heroHeadline: string | null

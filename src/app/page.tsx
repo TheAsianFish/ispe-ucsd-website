@@ -2,15 +2,16 @@ import Link from "next/link";
 
 import {
   boardTeaser,
-  programs,
   resources,
   siteMetadata,
 } from "@/content/mock";
+import type { Program } from "@/content/types";
 import {
   getFeaturedUpcomingEvent,
   getUpcomingEvents,
 } from "@/sanity/lib/queries/events";
 import { getActiveAnnouncements } from "@/sanity/lib/queries/announcements";
+import { getProgramsForHome } from "@/sanity/lib/queries/programs";
 import type { Event } from "@/content/types";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
@@ -60,7 +61,13 @@ export default async function Home() {
     : upcomingCMS.slice(0, 3);
   const upcomingPreview = upcomingFiltered.map(cmsToEvent);
 
-  const programsPreview = programs.slice(0, 3);
+  const cmsPrograms = await getProgramsForHome(3);
+  const programsPreview: Program[] = cmsPrograms.map((p) => ({
+    id: p._id,
+    slug: p.slug ?? undefined,
+    title: p.title,
+    description: p.shortDescription,
+  }));
   const resourcesPreview = resources.slice(0, 4);
 
   return (
@@ -221,22 +228,31 @@ export default async function Home() {
             title="Programs that support your journey."
             description="From mentorship to site visits, our programs are designed to make the path into pharma and biotech more approachable."
           />
-          <div
-            id="home-programs"
-            className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
-          >
-            {programsPreview.map((program) => (
-              <ProgramCard key={program.id} program={program} />
-            ))}
-          </div>
-          <div>
-            <Link
-              href="/programs"
-              className="text-sm font-medium text-sky-700 underline-offset-2 hover:underline"
-            >
-              Explore all programs
-            </Link>
-          </div>
+          {programsPreview.length > 0 ? (
+            <>
+              <div
+                id="home-programs"
+                className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+              >
+                {programsPreview.map((program) => (
+                  <ProgramCard key={program.id} program={program} />
+                ))}
+              </div>
+              <div>
+                <Link
+                  href="/programs"
+                  className="text-sm font-medium text-sky-700 underline-offset-2 hover:underline"
+                >
+                  Explore all programs
+                </Link>
+              </div>
+            </>
+          ) : (
+            <p className="text-sm text-slate-600">
+              We don&apos;t have any programs to show yet. Stay tuned—we&apos;ll
+              add them here soon.
+            </p>
+          )}
         </Container>
       </section>
 

@@ -9,6 +9,9 @@ export const metadata: Metadata = {
   title: "Membership",
 };
 
+/** Revalidate this page at most every 60 seconds so Sanity edits show on Vercel. */
+export const revalidate = 60;
+
 const DEFAULTS = {
   title: "Membership",
   intro:
