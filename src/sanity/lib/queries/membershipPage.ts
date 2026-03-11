@@ -1,4 +1,4 @@
-import { client } from '../client'
+import { sanityFetch } from '../client'
 import type { MembershipPageContent } from '@/content/types'
 
 const projection = `
@@ -34,7 +34,7 @@ const projection = `
 /** Fetches the first membershipPage document. Returns null if none or on error. */
 export async function getMembershipPage(): Promise<MembershipPageContent | null> {
   try {
-    const doc = await client.fetch<MembershipPageContent | null>(
+    const doc = await sanityFetch<MembershipPageContent | null>(
       `*[_type == "membershipPage"][0]{ ${projection} }`,
     )
     return doc ?? null

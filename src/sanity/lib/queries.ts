@@ -1,4 +1,4 @@
-import { client } from "./client"
+import { sanityFetch } from "./client"
 
 export type FeaturedPhotoItem = {
   alt?: string | null
@@ -12,7 +12,7 @@ export type FeaturedPhotosResult = {
 /** First featuredPhotos document, or { photos: [] } if none or on error. */
 export async function getFeaturedPhotos(): Promise<FeaturedPhotosResult> {
   try {
-    const doc = await client.fetch<FeaturedPhotosResult | null>(
+    const doc = await sanityFetch<FeaturedPhotosResult | null>(
       `*[_type == "featuredPhotos"][0]{ photos[]{ alt, asset } }`,
     )
     if (!doc?.photos?.length) return { photos: [] }
@@ -73,7 +73,7 @@ export async function getAllBoardTerms(): Promise<BoardTermSummary[]> {
       isCurrent
     }
   `
-  return client.fetch(query)
+  return sanityFetch(query)
 }
 
 export async function getBoardBySlug(slug: string): Promise<BoardTerm | null> {
@@ -82,7 +82,7 @@ export async function getBoardBySlug(slug: string): Promise<BoardTerm | null> {
       ${boardTermProjection}
     }
   `
-  return client.fetch(query, { slug })
+  return sanityFetch(query, { slug })
 }
 
 export async function getCurrentBoard(): Promise<BoardTerm | null> {
@@ -91,5 +91,5 @@ export async function getCurrentBoard(): Promise<BoardTerm | null> {
       ${boardTermProjection}
     }
   `
-  return client.fetch(query)
+  return sanityFetch(query)
 }

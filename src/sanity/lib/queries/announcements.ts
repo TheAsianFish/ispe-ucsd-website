@@ -1,4 +1,4 @@
-import { client } from '../client'
+import { sanityFetch } from '../client'
 import type { Announcement } from '@/content/types'
 
 const projection = `
@@ -19,7 +19,7 @@ export async function getActiveAnnouncements(): Promise<Announcement[]> {
       (!defined(startAt) || startAt <= $now) &&
       (!defined(endAt) || endAt >= $now)
     ] | order(order asc, startAt desc, _createdAt desc) [0...3]{ ${projection} }`
-    const rows = await client.fetch<
+    const rows = await sanityFetch<
       { _id: string; title: string; body: string; href: string | null; hrefLabel: string | null }[]
     >(query, { now })
     if (!rows?.length) return []

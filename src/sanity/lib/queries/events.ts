@@ -1,4 +1,4 @@
-import { client } from '../client'
+import { sanityFetch } from '../client'
 
 export type EventCMS = {
   _id: string
@@ -40,7 +40,7 @@ const cutoffFuture = () => new Date().toISOString()
 export async function getFeaturedUpcomingEvent(): Promise<EventCMS | null> {
   const now = cutoffFuture()
   const query = `*[_type == "event" && isFeatured == true && (startDate >= $now || (defined(endDate) && endDate >= $now))] | order(startDate asc, order asc) [0]{ ${eventProjection} }`
-  const results = await client.fetch<EventCMS[]>(query, { now })
+  const results = await sanityFetch<EventCMS[]>(query, { now })
   return results && results.length > 0 ? results[0] : null
 }
 
@@ -50,12 +50,12 @@ export async function getUpcomingEvents(
 ): Promise<EventCMS[]> {
   const cutoff = cutoffPast()
   const query = `*[_type == "event" && startDate >= $cutoff] | order(order asc, startDate asc) [0...$limit]{ ${eventProjection} }`
-  return client.fetch(query, { cutoff, limit })
+  return sanityFetch(query, { cutoff, limit })
 }
 
 /** Past events: startDate < now, sort by order desc then startDate desc, limited */
 export async function getPastEvents(limit: number = 12): Promise<EventCMS[]> {
   const cutoff = cutoffFuture()
   const query = `*[_type == "event" && startDate < $cutoff] | order(order desc, startDate desc) [0...$limit]{ ${eventProjection} }`
-  return client.fetch(query, { cutoff, limit })
+  return sanityFetch(query, { cutoff, limit })
 }

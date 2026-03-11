@@ -10,6 +10,9 @@ import {
   type EventCMS,
 } from "@/sanity/lib/queries/events";
 
+/** Revalidate at most every 60 seconds so Sanity edits show on Vercel. */
+export const revalidate = 60;
+
 function cmsToEvent(e: EventCMS): Event {
   return {
     id: e._id,

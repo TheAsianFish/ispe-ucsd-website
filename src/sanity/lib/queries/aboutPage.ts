@@ -1,4 +1,4 @@
-import { client } from '../client'
+import { sanityFetch } from '../client'
 import type { AboutPageContent } from '@/content/types'
 
 const projection = `
@@ -19,7 +19,7 @@ const projection = `
 /** Fetches the single aboutPage document. Returns null if none or on error. */
 export async function getAboutPage(): Promise<AboutPageContent | null> {
   try {
-    const doc = await client.fetch<AboutPageContent | null>(
+    const doc = await sanityFetch<AboutPageContent | null>(
       `*[_type == "aboutPage" && _id == "aboutPage"][0]{ ${projection} }`,
     )
     return doc ?? null

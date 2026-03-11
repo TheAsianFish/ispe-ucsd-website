@@ -17,6 +17,9 @@ import { ProgramCard } from "@/components/cards/ProgramCard";
 import { ResourceCard } from "@/components/cards/ResourceCard";
 import { FeaturedPhotosSection } from "@/components/FeaturedPhotosSection";
 
+/** Revalidate at most every 60s so Sanity edits show on Vercel. */
+export const revalidate = 60;
+
 function cmsToEvent(e: {
   _id: string;
   title: string;
