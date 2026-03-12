@@ -52,6 +52,15 @@ export type Program = {
   ctaUrl?: string
 }
 
+export type Resource = {
+  id: string
+  title: string
+  description: string
+  url: string
+  category?: string
+  order?: number
+}
+
 export type MembershipPageContent = {
   title: string | null
   heroHeadline: string | null

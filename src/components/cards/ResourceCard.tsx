@@ -1,4 +1,4 @@
-import type { Resource } from "@/content/mock";
+import type { Resource } from "@/content/types";
 
 type ResourceCardProps = {
   resource: Resource;

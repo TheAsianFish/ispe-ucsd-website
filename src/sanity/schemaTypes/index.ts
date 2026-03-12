@@ -8,7 +8,8 @@ import { event } from './event'
 import { featuredPhotos } from './featuredPhotos'
 import { membershipPage } from './membershipPage'
 import { program } from './program'
+import { resource } from './resource'
 
 export const schema: { types: SchemaTypeDefinition[] } = {
-  types: [aboutPage, announcement, boardTerm, person, boardSeat, event, featuredPhotos, membershipPage, program],
+  types: [aboutPage, announcement, boardTerm, person, boardSeat, event, featuredPhotos, membershipPage, program, resource],
 }
