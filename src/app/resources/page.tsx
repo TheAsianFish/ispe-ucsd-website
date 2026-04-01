@@ -100,8 +100,14 @@ export default async function ResourcesPage() {
 
         {resources.length === 0 ? (
           <p className="text-sm text-slate-600">
-            We don&apos;t have any resources to share yet. Check back soon—we&apos;ll
-            keep this page updated as we add new recommendations.
+            We don&apos;t have any resources to share yet. In Sanity Studio,
+            create documents under Resources (one link per document). After you
+            publish, they will show here. If
+            you just added the schema, run{" "}
+            <code className="rounded bg-slate-100 px-1 py-0.5 text-xs">
+              npx sanity schema deploy
+            </code>{" "}
+            so Studio matches this site.
           </p>
         ) : (
           <div className="space-y-10">

@@ -1,13 +1,14 @@
 import Link from "next/link";
 
-import { resources, siteMetadata } from "@/content/mock";
-import type { Program } from "@/content/types";
+import { siteMetadata } from "@/content/mock";
+import type { Program, Resource } from "@/content/types";
 import {
   getFeaturedUpcomingEvent,
   getUpcomingEvents,
 } from "@/sanity/lib/queries/events";
 import { getActiveAnnouncements } from "@/sanity/lib/queries/announcements";
 import { getProgramsForHome } from "@/sanity/lib/queries/programs";
+import { getResourcesForHome } from "@/sanity/lib/queries/resources";
 import type { Event } from "@/content/types";
 import { Container } from "@/components/ui/Container";
 import { ButtonLink } from "@/components/ui/Button";
@@ -60,14 +61,22 @@ export default async function Home() {
     : upcomingCMS.slice(0, 3);
   const upcomingPreview = upcomingFiltered.map(cmsToEvent);
 
-  const cmsPrograms = await getProgramsForHome(3);
+  const [cmsPrograms, cmsResourcesHome] = await Promise.all([
+    getProgramsForHome(3),
+    getResourcesForHome(4),
+  ]);
   const programsPreview: Program[] = cmsPrograms.map((p) => ({
     id: p._id,
     slug: p.slug ?? undefined,
     title: p.title,
     description: p.shortDescription,
   }));
-  const resourcesPreview = resources.slice(0, 4);
+  const resourcesPreview: Resource[] = cmsResourcesHome.map((r) => ({
+    id: r._id,
+    title: r.title,
+    description: r.description,
+    url: r.url,
+  }));
 
   return (
     <div className="space-y-16 py-10 sm:py-12 lg:space-y-20 lg:py-16">
@@ -255,30 +264,40 @@ export default async function Home() {
         </Container>
       </section>
 
-      {/* Resources preview */}
+      {/* Resources preview (Sanity) */}
       <section aria-labelledby="home-resources">
         <Container className="space-y-6">
           <SectionHeading
             eyebrow="Resources"
             title="Starter resources for students."
-            description="These are placeholder links you can update later with the materials and tools you actually recommend."
+            description="Curated links from the chapter—add and organize them in Sanity under Resources."
           />
-          <div
-            id="home-resources"
-            className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
-          >
-            {resourcesPreview.map((resource) => (
-              <ResourceCard key={resource.id} resource={resource} />
-            ))}
-          </div>
-          <div>
-            <Link
-              href="/resources"
-              className="text-sm font-medium text-sky-700 underline-offset-2 hover:underline"
-            >
-              See all resources
-            </Link>
-          </div>
+          {resourcesPreview.length > 0 ? (
+            <>
+              <div
+                id="home-resources"
+                className="grid gap-4 md:grid-cols-2 lg:grid-cols-3"
+              >
+                {resourcesPreview.map((resource) => (
+                  <ResourceCard key={resource.id} resource={resource} />
+                ))}
+              </div>
+              <div>
+                <Link
+                  href="/resources"
+                  className="text-sm font-medium text-sky-700 underline-offset-2 hover:underline"
+                >
+                  See all resources
+                </Link>
+              </div>
+            </>
+          ) : (
+            <p className="text-sm text-slate-600">
+              No resources are listed yet. Add them in Sanity Studio (document
+              type &quot;Resources&quot;) and they will appear here and on the
+              Resources page.
+            </p>
+          )}
         </Container>
       </section>
 
