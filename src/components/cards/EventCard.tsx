@@ -70,7 +70,7 @@ export function EventCard({ event, featured }: EventCardProps) {
           </p>
         </header>
 
-        <p className="text-sm text-slate-600">{event.summary}</p>
+        <p className="line-clamp-3 text-sm text-slate-600">{event.summary}</p>
 
         {event.rsvpUrl ? (
           <div className="mt-auto pt-2">
@@ -108,12 +108,12 @@ export function EventCard({ event, featured }: EventCardProps) {
             >
               ✕
             </button>
-            <div className="relative w-full overflow-hidden rounded-xl bg-slate-100 shadow-2xl">
+            <div className="flex items-center justify-center overflow-hidden rounded-xl bg-slate-100 shadow-2xl">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={event.flyerImageUrl}
                 alt={event.flyerImageAlt ?? event.title}
-                className="block max-h-[85vh] w-full object-contain"
+                className="block max-h-[85vh] max-w-full w-auto object-contain"
               />
             </div>
             <p className="mt-2 text-center text-xs text-white/70">
